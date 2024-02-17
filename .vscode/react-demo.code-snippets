@@ -1,0 +1,26 @@
+{
+	"Print to console": {
+		"prefix": "jmi-demo",
+		"body": [
+      "const Demo = () => {"
+        "return ("
+          "<div>"
+            "<h1>Hello, world!</h1>"
+          "</div>"
+        ");"
+      "}",
+      "export default Demo;"
+		],
+		"description": "快速创建一个 React 组件"
+	}
+
+
+
+
+
+
+
+
+
+
+}
