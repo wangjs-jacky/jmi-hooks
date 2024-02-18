@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
-interface BlockPropsType {
+interface BlockPropsType extends HTMLAttributes<HTMLDivElement> {
   showText?: boolean;
   style?: any;
+  children: string;
 }
 
 const _Block = React.forwardRef<HTMLDivElement, BlockPropsType>(
   (props, ref) => {
     console.log('Block 渲染');
-    const { style = {}, showText = true, ...restProps } = props;
+    const { style = {}, showText = true, children, ...restProps } = props;
     return (
       <div
         ref={ref}
+        id=""
         {...restProps}
         style={{
           width: '100px',
@@ -24,7 +26,7 @@ const _Block = React.forwardRef<HTMLDivElement, BlockPropsType>(
           ...style,
         }}
       >
-        {showText ? '点击这里' : null}
+        {showText ? children : null}
       </div>
     );
   },
