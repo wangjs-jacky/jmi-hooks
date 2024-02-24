@@ -13,11 +13,9 @@ import { useRef } from 'react';
 import { useEffectWithTarget } from '../useEffectWithTarget';
 import { HTMLTargetType, getTargetEelement } from '../utils/getTargetElement';
 
-type DocumentEventKey = keyof DocumentEventMap;
-
-export const useEventListener = (
-  eventName: DocumentEventKey,
-  handler: (e: Event) => void,
+export const useEventListener = <K extends keyof GlobalEventHandlersEventMap>(
+  eventName: K,
+  handler: (e: GlobalEventHandlersEventMap[K]) => void,
   options: UseEventListenerOptionsType = {},
 ) => {
   const { target = window } = options;
@@ -25,7 +23,7 @@ export const useEventListener = (
   const handlerRef = useRef(handler);
   handlerRef.current = handler;
 
-  const useEventListener = (event: Event) => {
+  const useEventListener = (event: GlobalEventHandlersEventMap[K]): any => {
     return handlerRef.current(event);
   };
 
@@ -49,15 +47,17 @@ export interface UseEventListenerOptionsType {
 
 export interface UseEventListener2OptionsType {
   /** @name 事件名 */
-  eventName: string,
+  eventName: string;
   /** @name 回调函数 */
-  fn: (e: Event) => void,
-  options: UseEventListenerOptionsType,
+  fn: (e: Event) => void;
+  options: UseEventListenerOptionsType;
 }
 
-export const useEventListener2 = (
-  { eventName, fn = () => { }, options = {} }: UseEventListener2OptionsType
-) => {
+export const useEventListener2 = ({
+  eventName,
+  fn = () => {},
+  options = {},
+}: UseEventListener2OptionsType) => {
   const { target } = options;
 
   const handlerRef = useRef(fn);
