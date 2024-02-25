@@ -1,10 +1,12 @@
-import { useEffect, useRef, useLayoutEffect } from "react";
-import type { EffectCallback, DependencyList } from "react";
-import { HTMLTargetType, getTargetEelement } from "./getTargetElement";
-import { depsAreSame } from "./depsAreSame";
+import type { DependencyList, EffectCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { depsAreSame } from './depsAreSame';
+import { HTMLTargetType, getTargetEelement } from './getTargetElement';
 
 // 高阶函数
-export const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayoutEffect) => {
+export const createEffectWithTarget = (
+  useEffectType: typeof useEffect | typeof useLayoutEffect,
+) => {
   const useEffectWithTarget = (
     effect: EffectCallback,
     deps: DependencyList,
@@ -12,7 +14,8 @@ export const createEffectWithTarget = (useEffectType: typeof useEffect | typeof 
     target: HTMLTargetType | HTMLTargetType[] = [],
   ) => {
     const hasInitRef = useRef(false);
-    const lastElementRef = useRef<(Element | null)[]>([]);
+    const lastElementRef = useRef<(HTMLTargetType | HTMLTargetType)[]>([]);
+    const lastDepsRef = useRef<DependencyList>([]);
     const unLoadRef = useRef<any>();
 
     // 增强版 useEffect / useLayoutEffect
@@ -27,6 +30,7 @@ export const createEffectWithTarget = (useEffectType: typeof useEffect | typeof 
       if (!hasInitRef.current) {
         hasInitRef.current = true;
         lastElementRef.current = els;
+        lastDepsRef.current = deps;
 
         // 缓存卸载函数
         unLoadRef.current = effect();
@@ -35,30 +39,28 @@ export const createEffectWithTarget = (useEffectType: typeof useEffect | typeof 
 
       // 更新阶段（什么时候更新）
       if (
-        !depsAreSame(els, lastElementRef)
+        !depsAreSame(els, lastElementRef.current) ||
+        !depsAreSame(deps, lastDepsRef.current)
       ) {
         // 执行卸载函数
         unLoadRef.current?.();
 
         // 更新依赖
         lastElementRef.current = els;
+        lastDepsRef.current = deps;
 
         // 更新卸载函数
         unLoadRef.current = effect();
       }
-
-    }, [deps]);
+    });
 
     // 兼容 React-refresh 热更新
     useEffect(() => {
       return () => {
         unLoadRef.current?.();
         hasInitRef.current = false;
-      }
-    }, [])
-  }
+      };
+    }, []);
+  };
   return useEffectWithTarget;
-}
-
-
-
+};
