@@ -36,9 +36,9 @@ export const getTargetEelement = <T extends BaiscTargetType>(
     return undefined;
   }
 
-  // 客户端
+  // 不建议兜底，因为有些场景就是找不到元素，只有对于监听钩子可能需要兜底逻辑。
   if (!target) {
-    return window.document;
+    return null;
   }
 
   let targetElement: T;

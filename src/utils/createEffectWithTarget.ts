@@ -24,7 +24,9 @@ export const createEffectWithTarget = (
       const targets = Array.isArray(target) ? target : [target];
 
       // 兼容3种类型 refs 写法，最后获取 Element 数组
-      const els = targets.map((item) => getTargetEelement(item));
+      const els = targets
+        .map((item) => getTargetEelement(item))
+        .filter(Boolean);
 
       // 首次加载
       if (!hasInitRef.current) {
