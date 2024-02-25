@@ -1,40 +1,25 @@
-# jmi-hooks
+# 教程说明
 
-<!-- [![NPM version](https://img.shields.io/npm/v/jhooks.svg?style=flat)](https://npmjs.org/package/jhooks)
-[![NPM downloads](http://img.shields.io/npm/dm/jhooks.svg?style=flat)](https://npmjs.org/package/jhooks) -->
+本篇教程的核心理念对 `ahooks` 进行源码简析，以最简易的方式讲解清楚 `ahooks` 工作的原理，并不追求钩子编写的尽善尽美。
 
-.
+## 为什么要做这个项目？
 
-## Usage
+虽然 ahooks 的文档已经非常详尽，但为什么还要额外开发一个名为 jmi-hooks 的钩子函数库呢？
 
-TODO
+主要原因如下：
 
-## Options
+1. 缺少使用场景说明：`ahooks` 文档网站主要是对 `hooks` 钩子的使用介绍，并没有对使用场景进行很好的说明，会让开发者很疑惑 `React` 官方已经维护了一套钩子，又有哪些场景还需要使用一个第三方开发者开发的钩子库呢？
 
-TODO
+   我认为对于函数库文档来说，使用场景说明，或者反例场景对于函数库使用者来说帮助他们更好的了解到为什么要使用这写钩子，比如减少重复渲染场景中，我们经常会去使用 `useCallback` 钩子去锁死函数的引用地址，这对于简单场景已近够用了，但对于新手开发者而言，依赖数组的填写带来很大的一个心智负担。少写一项依赖会引发多余的重复渲染导致 `useCallback` 函数失效，多写一项依赖项又会引发陈旧闭包的问题。
 
-## Development
+   如果直接使用 `useEvent` 钩子就可以极大的减少由此带来的开发心智负担。
 
-```bash
-# install dependencies
-$ pnpm install
+1. 部分 ahooks 中的钩子并未公开，作为内部工具函数供其他 hooks 函数使用。
 
-# develop library by docs demo
-$ pnpm start
+   比如说，`react` 中我们最为常用的用于控制组件生命周期 `hooks` 的 `useEffect` 钩子， 在 `ahooks` 中就存在一堆增强版钩子，如 `useEffectWithTarget` 、`useDeepCompareEffectWithTarget` 、`useIsomorphicLayoutEffectWithTarget` 等。
 
-# build library source code
-$ pnpm run build
+   还比如 `useEventListener` 中的 `getTargetElement` 函数，可以快速的兼容多种处理 `target` 对象，也没有暴露出来。
 
-# build library source code in watch mode
-$ pnpm run build:watch
+1. `ahooks` 中钩子数量众多，单个钩子支持的功能过于丰富，很多功能在实际场景中并不常用。有时为了理解某个钩子的配置需要仔细阅读函数的使用说明。实际上，功能越简单，代码就越不容易出错。
 
-# build docs
-$ pnpm run docs:build
-
-# check your project for potential problems
-$ pnpm run doctor
-```
-
-## LICENSE
-
-MIT
+   此外，在企业级项目中，有些人对类似 `ahooks` 这样的第三方库并不信任，更愿意自行封装而不使用其 `npm` 包。在大型项目中，担心版本升级或开发者的恶意提交（例如 `colorjs` 事件）可能导致项目无法运行。在一些情况下，例如在 `umi` 源码中，会将工具函数库单独构建放在 `utils` 文件下，而非写入 `package.json` 中。
