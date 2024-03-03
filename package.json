@@ -11,6 +11,7 @@
   "scripts": {
     "build": "father build",
     "build:watch": "father dev",
+    "deploy": "bash deploy.sh",
     "dev": "dumi dev",
     "docs:build": "dumi build",
     "doctor": "father doctor",
@@ -43,6 +44,10 @@
       "prettier --parser=typescript --write"
     ]
   },
+  "dependencies": {
+    "ahooks": "^3.7.9",
+    "lodash-es": "^4.17.21"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
@@ -69,8 +74,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "authors": [],
-  "dependencies": {
-    "ahooks": "^3.7.9"
-  }
+  "authors": []
 }

@@ -4,12 +4,11 @@
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "jsx": "react-jsx",
     // "baseUrl": "./",
     "paths": {
-      "@@/*": [
-        "./.dumi/tmp/*"
-      ],
+      "@@/*": ["./.dumi/tmp/*"]
       // "@": [
       //   "src"
       // ],
@@ -22,8 +21,6 @@
       // ]
     }
   },
-  "include": [
-    ".dumirc.ts",
-    "src/**/*"
-  ]
+  "include": [".dumirc.ts", "src/**/*"],
+  "exclude": ["**/*.md"]
 }

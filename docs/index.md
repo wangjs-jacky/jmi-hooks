@@ -6,23 +6,22 @@ hero:
     - text: 指南
       link: /guide
     - text: Hooks 列表
-      link: /jmi-hooks
+      link: /hooks
 features:
   - title: 易学易用
     emoji: 👾
   - title: 支持 SSR
     emoji: 🍋
-    description: 
+    description:
   - title: 对输入输出函数做了特殊处理，避免闭包问题
     emoji: 🧙‍♀️
   - title: 包含大量提炼自业务的高级 Hooks
     emoji: 🚵‍♂️
   - title: 包含丰富的基础 Hooks
     emoji: 🌈
-    description: 
+    description:
   - title: 使用 TypeScript 构建，提供完整的类型定义文件
     emoji: 🩸
-
 ---
 
 ## 介绍
