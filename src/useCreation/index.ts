@@ -1,7 +1,7 @@
 import { useRef, type DependencyList } from 'react';
 import { depsAreSame } from '../utils/depsAreSame';
 
-export const useCreation = <T,>(fn: () => T, deps: DependencyList) => {
+export const useCreation = <T>(fn: () => T, deps: DependencyList) => {
   const isFirstMount = useRef(false);
   const depsRef = useRef(deps);
   const objRef = useRef<T>();
