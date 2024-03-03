@@ -9,6 +9,7 @@
     "dist"
   ],
   "scripts": {
+    "aliOss": "node ./uploadOss.mjs",
     "build": "father build",
     "build:watch": "father dev",
     "deploy": "bash deploy.sh",
@@ -46,7 +47,10 @@
   },
   "dependencies": {
     "ahooks": "^3.7.9",
-    "lodash-es": "^4.17.21"
+    "ali-oss": "^6.20.0",
+    "lodash-es": "^4.17.21",
+    "p-queue": "^8.0.1",
+    "readdirp": "^3.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

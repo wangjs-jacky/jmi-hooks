@@ -6,7 +6,7 @@ set -e
 npm run docs:build
 
 # 发布到 ali CDN
-# npm run aliOss
+npm run aliOss
 
 # 进入生成的文件夹
 cd ./docs-dist
@@ -28,6 +28,6 @@ git push -f $githubUrl main:gh-pages # 推送到github
 
 
 cd - # 退回开始所在目录
-# rm -rf ./docs-dist
+rm -rf ./docs-dist
 
 echo 'deploy.sh脚本执行结束'

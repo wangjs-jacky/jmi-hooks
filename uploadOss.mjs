@@ -1,10 +1,13 @@
 import OSS from "ali-oss";
 import { createReadStream } from "fs";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import readdirp from "readdirp";
 import PQueue from "p-queue";
 
 const queue = new PQueue({ concurrency: 10 });
+
+const docsPath = './docs-dist';
+const assetsDir = 'useExternal';
 
 const client = new OSS({
   /* cdn 缓存地址 */
@@ -26,7 +29,7 @@ async function isExistObject(objectName) {
 }
 
 async function uploadFile(objectName, withHash = false) {
-  const file = resolve("./docs/.vuepress/dist", objectName);
+  const file = resolve(docsPath, objectName);
   /* 如果路径路径不带 hash 值，则直接重新上传 */
   const exist = withHash ? await isExistObject(objectName) : false;
   if (!exist) {
@@ -46,7 +49,7 @@ async function uploadFile(objectName, withHash = false) {
 
 async function main() {
   /* 首先上传不带 hash 的文件 */
-  for await (const entry of readdirp("./docs/.vuepress/dist", {
+  for await (const entry of readdirp(docsPath, {
     depth: 0,
     type: "files",
   })) {
@@ -54,10 +57,10 @@ async function main() {
   }
 
   /* 上传携带 hash 的文件 */
-  for await (const entry of readdirp("./docs/.vuepress/dist/assets", {
+  for await (const entry of readdirp(join(docsPath, assetsDir), {
     type: "files",
   })) {
-    queue.add(() => uploadFile(`assets/${entry.path}`), true);
+    queue.add(() => uploadFile(`${assetsDir}/${entry.path}`), true);
   }
 }
 

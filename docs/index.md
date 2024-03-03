@@ -6,7 +6,7 @@ hero:
     - text: 指南
       link: /guide
     - text: Hooks 列表
-      link: /hooks
+      link: /hooks/how-to-develop-hooks
 features:
   - title: 易学易用
     emoji: 👾

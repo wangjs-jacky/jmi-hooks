@@ -1,7 +1,11 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  base: '/jmi',
+  publicPath:
+    process.env.NODE_ENV === 'development'
+      ? ''
+      : 'https://jmi-hooks.oss-cn-shanghai.aliyuncs.com/',
+  base: process.env.NODE_ENV === 'development' ? '/' : '/jmi-hooks',
   outputPath: 'docs-dist',
   themeConfig: {
     name: 'jmi-hooks',
