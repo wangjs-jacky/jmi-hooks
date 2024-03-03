@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { useEffectWithTarget } from '../useEffectWithTarget';
+import { useDeepCompareEffectWithTarget } from '../useDeepCompareEffectWithTarget';
 import { getTargetEelement, type TargetType } from '../utils/getTargetElement';
 
 export const useMutationObserver = (
@@ -16,7 +16,7 @@ export const useMutationObserver = (
     fnRef.current?.(mutationsList, observer);
   }, []);
 
-  useEffectWithTarget(
+  useDeepCompareEffectWithTarget(
     () => {
       const targetElement = getTargetEelement(target);
       if (!targetElement) {
