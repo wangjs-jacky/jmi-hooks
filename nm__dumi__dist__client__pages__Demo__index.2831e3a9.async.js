@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkjmi_hooks=self.webpackChunkjmi_hooks||[]).push([[9],{21207:function(i,n,e){e.r(n),e.d(n,{default:function(){return r}});var o=e(95350),t=e(50959),m=function(){var s=(0,o.UO)(),u=s.id,d=(0,o.WF)(),c=d.demos,f=c[u]||{},a=f.component;return a&&(0,t.createElement)(a)},r=m}}]);
